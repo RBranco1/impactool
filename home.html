@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teia de Conversão de Biocombustível</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .app-header {
+      padding: 1rem 2rem !important;
+      min-height: 70px !important;
+      align-items: center !important;
+    }
+    .header-nav .nav-link {
+      font-size: 1.05rem !important;
+      padding: 0.5rem 0.75rem !important;
+    }
+    .lang-selector {
+      font-size: 1rem !important;
+    }
+    .home-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      align-items: center;
+      gap: 3rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-image {
+      width: 100%;
+      aspect-ratio: 1;
+      background-image: url('hero-image.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(3, 36, 77, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0;
+      color: var(--font);
+    }
+
+    .hero-content .highlight {
+      color: var(--primary-color);
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #555;
+      margin: 0;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.95rem 2rem;
+      background: #fff;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: fit-content;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(251, 68, 26, 0.18);
+    }
+
+    .cta-button:hover {
+      background: var(--primary-color);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(251, 68, 26, 0.4);
+    }
+
+    .cta-button::after {
+      content: "→";
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 900px) {
+      .home-hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.5rem;
+      }
+
+      .hero-image {
+        aspect-ratio: 16 / 9;
+      }
+
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="header-left">
+        <img src="logo-pid.png" alt="Plataforma Interativa de Descarbonização" style="height: 50px; border-radius: 8px;">
+      </div>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Início</a>
+        <a href="#" class="nav-link">Infraestrutura</a>
+        <a href="#" class="nav-link">Indústrias</a>
+        <a href="#" class="nav-link">PID</a>
+        <a href="#" class="nav-link">Impactool</a>
+        <a href="#" class="nav-link">Saiba Mais</a>
+      </nav>
+      <div class="header-right">
+        <span class="lang-selector active">PT</span>
+        <span class="lang-divider">|</span>
+        <span class="lang-selector">EN</span>
+      </div>
+    </header>
+
+  <main class="home-hero">
+    <div class="hero-image"></div>
+    <div class="hero-content">
+      <h1>
+        <span class="highlight">Impactool
+        </span>
+      </h1>
+      <p>
+        Combustíveis renováveis, energia solar, energia eólica, baterias, hidrogênio verde, e mais. Para cada produto ou tecnologia que ajuda o Brasil a reduzir suas emissões, há consequências reais para o planeta, para as pessoas e para a economia.
+      </p>
+      <a href="teia.html" class="cta-button">Acessar Impactool</a>
+    </div>
+  </main>
+  </div>
+</body>
+</html>

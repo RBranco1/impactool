@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teia - Mapa de Impacto de Biocombustível</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .app-header {
+      padding: 1rem 2rem !important;
+      min-height: 70px !important;
+      align-items: center !important;
+    }
+    .header-nav .nav-link {
+      font-size: 1.05rem !important;
+      padding: 0.5rem 0.75rem !important;
+    }
+    .lang-selector {
+      font-size: 1rem !important;
+    }
+    .nav-link.active {
+      color: var(--primary-color, #FB441A);
+      border-bottom: 2px solid var(--primary-color, #FB441A);
+      padding-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="header-left">
+        <img src="logo-pid.png" alt="Plataforma Interativa de Descarbonização" style="height: 50px; border-radius: 8px;">
+      </div>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Início</a>
+        <a href="#" class="nav-link">Infraestrutura</a>
+        <a href="#" class="nav-link">Ind&#xFA;strias</a>
+        <a href="#" class="nav-link">PID</a>
+        <a href="#" class="nav-link active">Impactool</a>
+        <a href="#" class="nav-link">Saiba Mais</a>
+      </nav>
+      <div class="header-right">
+        <span class="lang-selector active">PT</span>
+        <span class="lang-divider">|</span>
+        <span class="lang-selector">EN</span>
+      </div>
+    </header>
+
+    <div class="page-header-section">
+      <h1 class="page-title">Mapa de Impacto — Biocombustível</h1>
+      <div class="breadcrumb">
+        <span>Análise de Conversão</span>
+        <span class="separator">/</span>
+        <span class="breadcrumb-current">Visualização</span>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <section class="right-content">
+        <div class="map-hud">
+          <div class="filter-section floating-filter">
+            <button class="filter-header" id="filter-toggle">
+              <span class="filter-icon">≡</span>
+              <span class="filter-label" id="filter-label">Tudo</span>
+              <span class="filter-caret">▼</span>
+            </button>
+            <div class="filter-menu" id="track-filters-list"></div>
+          </div>
+        </div>
+
+        <div class="zoom-controls">
+          <button class="zoom-btn zoom-in" title="Aumentar zoom">+</button>
+          <button class="zoom-btn zoom-out" title="Diminuir zoom">−</button>
+          <button class="zoom-btn zoom-fullscreen" title="Tela cheia">⤢</button>
+        </div>
+
+        <div class="map-canvas">
+          <svg id="web" class="svg-web" viewBox="0 0 1800 1600" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="node-tooltip" id="node-tooltip">
+            <div class="node-tooltip-accent"></div>
+            <div class="node-tooltip-body">
+              <span class="node-tooltip-title" id="tooltip-title"></span>
+              <span class="node-tooltip-meta" id="tooltip-meta"></span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <footer class="app-footer">
+      <div class="footer-content">
+        <div class="footer-left">
+          <p class="footer-text">Fonte dos dados: Análise de Conversão • atualizado em <span id="today-date"></span></p>
+        </div>
+        <div class="footer-right">
+          <button id="export-btn" class="export-button" title="Baixar dados em CSV">
+            <span class="export-icon">⬇</span>
+            <span class="export-label">Exportar visualização</span>
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modal-title">Editar Ponto</h2>
+          <p id="modal-subtitle">Ajuste o valor para recalcular o mapa</p>
+        </div>
+        <div class="modal-body">
+          <div id="modal-material-group" class="modal-unit-group">
+            <label for="modal-material-select" class="modal-unit-label">Material</label>
+            <select id="modal-material-select" class="modal-unit-select">
+              <option value="biocombustivel">Biocombustível</option>
+              <option value="solar">Energia solar</option>
+              <option value="eolica">Energia eólica</option>
+              <option value="baterias">Baterias</option>
+              <option value="hidrogenio">Hidrogênio verde</option>
+            </select>
+          </div>
+          <div id="modal-unit-group" class="modal-unit-group">
+            <label for="modal-unit-select" class="modal-unit-label">Unidade de volume</label>
+            <select id="modal-unit-select" class="modal-unit-select">
+              <option value="L">L</option>
+              <option value="m3">m³</option>
+              <option value="bar">bbl</option>
+            </select>
+          </div>
+          <input
+            id="modal-input"
+            type="number"
+            min="0"
+            step="0.1"
+            class="modal-input"
+            placeholder="Digite um valor"
+          >
+          <div id="modal-unit-display" class="modal-unit"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="modal-cancel" class="modal-btn modal-cancel-btn">Cancelar</button>
+          <button id="modal-save" class="modal-btn modal-save-btn">Salvar alterações</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('today-date').textContent = new Date().toLocaleDateString('pt-BR', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit'
+    }).replace(/de /g, ' ');
+  </script>
+  <script src="data.js"></script>
+<script src="config.js"></script>
+<script src="script-teia.js"></script>
+</body>
+</html>
